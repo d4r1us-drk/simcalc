@@ -20,124 +20,124 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
+#include <getopt.h>
 
-double sum(double a, double b)
-{
+double addition(double a, double b) {
     return a + b;
 }
 
-double res(double a, double b)
-{
+double subtraction(double a, double b) {
     return a - b;
 }
 
-double mul(double a, double b)
-{
+double multiplication(double a, double b) {
     return a * b;
 }
 
-double div(double a, double b)
-{
-    return a / b;
+double division(double a, double b) {
+    if (b != 0) {
+        return a / b;
+    } else {
+        fprintf(stderr, "Error: Division by zero\n");
+        exit(1);
+    }
 }
 
-void getInput(double *a, double *b)
-{
-    // variable de control para validar input
-    bool validInput = false;
+double exponentiation(double base, double exp) {
+    double result = 1.0;
+    for (int i = 0; i < exp; i++) {
+        result *= base;
+    }
+    return result;
+}
 
-    // input 1
-    while (!validInput)
-    {
-        printf("Intruduzca el primer numero: ");
-        if (scanf("%lf", a) == 1)
-        {
-            validInput = true;
-        }
-        else
-        {
-            while (getchar() != '\n');
-            printf("Introduzca un numero valido.\n\n");
-        }
-	}
+double calculateRoot(double base, double exp) {
+    if (base < 0 && exp != 0) {
+        fprintf(stderr, "Error: Cannot calculate the root of a negative number\n");
+        exit(1);
+    }
+    
+    if (exp == 0) {
+        return 1;
+    }
 
-    // reseteamos la variable validInput para validar el input 2
-    validInput = false;
+    double epsilon = 0.000001;
+    double x = 1.0;
 
-    // input 2
-    while (!validInput)
-    {
-        printf("Intruduzca el segundo numero: ");
-        if (scanf("%lf", b) == 1)
-        {
-            validInput = true;
+    while (1) {
+        double nextX = ((exp - 1) * x + base / exponentiation(x, exp - 1)) / exp;
+
+        if (nextX - x < epsilon && x - nextX < epsilon) {
+            break; // Convergence reached
         }
-        else
-        {
-            while (getchar() != '\n');
-            printf("Introduzca un numero valido.\n\n");
+
+        x = nextX;
+    }
+
+    return x;
+}
+
+void displayHelp() {
+    printf("Usage: calculator [OPTION]...\n");
+    printf("A simple calculator program that performs basic mathematical operations.\n");
+    printf("\nOptions:\n");
+    printf("  -a A B      Calculate the sum of two numbers A and B.\n");
+    printf("  -s A B      Calculate the difference of two numbers A and B.\n");
+    printf("  -m A B      Calculate the product of two numbers A and B.\n");
+    printf("  -d A B      Calculate the division of two numbers A and B.\n");
+    printf("  -e BASE EXP Calculate the exponentiation of BASE to the power of EXP.\n");
+    printf("  -r BASE EXP Calculate the root of BASE to the power of 1/EXP.\n");
+    printf("  -h          Display this help message and exit.\n");
+}
+
+void run(int argc, char **argv) {
+    if (argc == 1) {
+        displayHelp();
+        exit(0);
+    }
+
+    int opt;
+    double result;
+
+    while ((opt = getopt(argc, argv, "a:s:m:d:e:r:h")) != -1) {
+        switch (opt) {
+            case 'a':
+                result = addition(atof(optarg), atof(argv[optind]));
+                printf("Addition result: %.3lf\n", result);
+                break;
+            case 's':
+                result = subtraction(atof(optarg), atof(argv[optind]));
+                printf("Subtraction result: %.3lf\n", result);
+                break;
+            case 'm':
+                result = multiplication(atof(optarg), atof(argv[optind]));
+                printf("Multiplication result: %.3lf\n", result);
+                break;
+            case 'd':
+                result = division(atof(optarg), atof(argv[optind]));
+                printf("Division result: %.3lf\n", result);
+                break;
+            case 'e':
+                result = exponentiation(atof(optarg), atof(argv[optind]));
+                printf("Exponentiation result: %.3lf\n", result);
+                break;
+            case 'r':
+                result = calculateRoot(atof(optarg), atof(argv[optind]));
+                printf("Root result: %.3lf\n", result);
+                break;
+            case 'h':
+                displayHelp();
+                exit(0);
+            default:
+                fprintf(stderr, "Invalid command line option. Use '-h' for help.\n");
+                exit(1);
         }
     }
 }
 
-void run()
-{
-    // declaraciones
-    double numA, numB, result;
-    int option, status, temp;
-
-    // obtiene los numeros a operar
-    getInput(&numA, &numB);
-
-    // menu principal
-    printf("¿Que operación desea realizar? [1,2,3,4] \n");
-    printf("\t1. Suma\n");
-    printf("\t2. Resta\n");
-    printf("\t3. Multiplicación\n");
-    printf("\t4. División\n");
-    printf("Elije: ");
-
-    // obtiene la opción elegida del menu
-    status = scanf("%d", &option);
-
-    // valida que la opción elegida sea un entero
-    while(status!=1){
-        while((temp=getchar()) != EOF && temp != '\n');
-        printf("Entrada invaldia... Introduzca una opción valida [1,2,3,4]: ");
-        status = scanf("%d", &option);
-    }
-	
-    // casos para cada opción del menu
-    switch (option)
-    {
-        // suma
-        case 1:
-            result = sum(numA, numB);
-            break;
-        // resta
-        case 2:
-            result = res(numA, numB);
-            break;
-        // multiplicación
-        case 3:
-            result = mul(numA, numB);
-            break;
-        // división
-        case 4:
-            result = div(numA, numB);
-            break;
-        // imprime solo un salto de línea de lo contrario
-        default:
-            printf("\n");
-    }
-
-    // resultado
-    printf("El resultado es: %.3lf \n", result);
-}
-
-int main(int argc, char **argv)
-{
-    run();
+int main(int argc, char **argv) {
+    run(argc, argv);
     return 0;
 }
