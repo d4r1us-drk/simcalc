@@ -1,7 +1,43 @@
-# Simple Calculator (simcalc)
+# simcalc - Simple Calculator
+
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Building](#building)
+- [Usage](#usage)
+- [Options](#options)
+- [Examples](#examples)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Introduction
-`simcalc` is a command-line program that performs basic mathematical operations, including addition, subtraction, multiplication, division, exponentiation, and root calculations. This program is free software and is distributed under the GNU General Public License (GPL) version 3.0 or later.
+`simcalc` is a command-line program that performs basic mathematical operations, including addition, subtraction, multiplication, division, exponentiation, and root calculations.
+
+## Building
+
+This tool is provided as source code and can be built using `make`. Here
+are the build instructions:
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/d4r1us-drk/simcalc.git
+   ```
+
+2. Change the directory to the cloned repository:
+
+   ```bash
+   cd simcalc
+   ```
+
+3. Build the tool using `make`:
+
+   ```bash
+   make
+   ```
+
+You should now have an executable named `simcalc`. You can copy it to a
+location in your PATH for easy access.
 
 ## Usage
 ```
@@ -18,44 +54,43 @@ simcalc [OPTION]...
 - `-h, --help`                        Display this help message and exit.
 - `-v, --version`                     Display the program version and exit.
 
-## Example Usage
-- To add two numbers, 5 and 3:
+## Examples
+1. To add two numbers, 5 and 3:
   ```
   simcalc -a 5 3
   ```
 
-- To subtract 10 from 25:
+2. To subtract 10 from 25:
   ```
   simcalc -s 25 10
   ```
 
-- To multiply 6 by 4:
+3. To multiply 6 by 4:
   ```
   simcalc -m 6 4
   ```
 
-- To divide 20 by 4:
+4. To divide 20 by 4:
   ```
   simcalc -d 20 4
   ```
 
-- To calculate the square of 5:
+5. To calculate the square of 5:
   ```
   simcalc -e 5 2
   ```
 
-- To calculate the cube root of 8:
+6. To calculate the cube root of 8:
   ```
   simcalc -r 8 3
   ```
 
+## Contributing
+
+If you would like to contribute to Passgen, please create a pull request on the
+GitHub repository.
+
 ## License
-This program is free software and is distributed under the terms of the GNU General Public License (GPL) version 3.0 or later. For more details, please see the [GNU General Public License](http://www.gnu.org/licenses/).
 
-## Version
-`simcalc` version: 0.1
-
-## Author
-- Darius Drake
-
-Please refer to the GNU General Public License for more details regarding the terms and conditions of using this software.
+This project is licensed under the GPLv3 License - see the [LICENSE](LICENSE)
+file for details.
