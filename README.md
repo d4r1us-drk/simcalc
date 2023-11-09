@@ -11,7 +11,9 @@
 - [License](#license)
 
 ## Introduction
-`simcalc` is a command-line program that performs basic mathematical operations, including addition, subtraction, multiplication, division, exponentiation, and root calculations.
+`simcalc` is a command-line program that performs basic mathematical
+operations, including addition, subtraction, multiplication, division,
+exponentiation, and root calculations.
 
 ## Building
 
